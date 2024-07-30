@@ -1,13 +1,14 @@
 import React from "react";
-import backgorundRegister from "../../public/img/registerBG.jpg";
-import logo from "../../public/img/logo.png";
 import { useForm } from "react-hook-form";
+import logo from "../../public/img/logo.png";
 import moneyBG from "../../public/img/monye.jpg";
-import useSequer from "../hooks/axiosSequer";
+import backgorundRegister from "../../public/img/registerBG.jpg";
+
+import usePublic from "../hooks/axiosPublic";
 
 const Register = () => {
-  const axiosSequer = useSequer();
 
+  const axiosPublic= usePublic()
   const {
     register,
     handleSubmit,
@@ -20,15 +21,13 @@ const Register = () => {
     const email = data.email;
     const phoneNumber = data.phone;
     const password = data.password;
-    // if(password.length<4){
-    //   alert("password must be at least 4 characters")
-    //   return 0;
-    // }
-    console.log(data.name);
-    axiosSequer
-      .post("/jwt", data)
-      .then((res) => console.log(res.data))
-      .catch((err) => console.error(err));
+    axiosPublic.post("/createUser",data)
+    .then((res)=>console.log(res.data))
+    console.log(data);
+    // axiosSequer
+    //   .post("/jwt", data)
+    //   .then((res) => console.log(res.data))
+    //   .catch((err) => console.error(err));
   };
   return (
     <div className="grid justify-center items-center my-6">
@@ -83,14 +82,21 @@ const Register = () => {
                     className={`input input-bordered bg-transparent ${
                       errors.phone ? "input-error" : "input-info"
                     }`}
-                    {...register("phone", { required: true,pattern: /(^(\+8801|8801|01|008801))[1|3-9]{1}(\d){8}$/ })}
+                    {...register("phone", {
+                      required: true,
+                      pattern: /(^(\+8801|8801|01|008801))[1|3-9]{1}(\d){8}$/,
+                    })}
                   />
                   {errors.phone && errors.phone.type === "required" && (
-                  <span className="text-start text-xl text-red-500">This field is required</span>
-                )}
-                 {errors.phone && errors.phone.type === "pattern" && (
-                  <span className="text-start text-xl text-red-500">Give a valid number</span>
-                )}
+                    <span className="text-start text-xl text-red-500">
+                      This field is required
+                    </span>
+                  )}
+                  {errors.phone && errors.phone.type === "pattern" && (
+                    <span className="text-start text-xl text-red-500">
+                      Give a valid number
+                    </span>
+                  )}
                 </div>
               </div>
               {/* email */}
@@ -125,13 +131,26 @@ const Register = () => {
                   className={`input input-bordered bg-transparent ${
                     errors.password ? "input-error" : "input-info"
                   }`}
-                  {...register("password", { required: true, minLength: 5 })}
+                  {...register("password", {
+                    required: true,
+                    minLength: 5,
+                    maxLength: 5,
+                  })}
                 />
                 {errors.password && errors.password.type === "required" && (
-                  <span className="text-start text-xl text-red-500">This field is required</span>
+                  <span className="text-start text-xl text-red-500">
+                    This field is required
+                  </span>
                 )}
                 {errors.password && errors.password.type === "minLength" && (
-                  <span className="text-start text-xl text-red-500">At least 5 characters</span>
+                  <span className="text-start text-xl text-red-500">
+                    At least 5 characters
+                  </span>
+                )}
+                {errors.password && errors.password.type === "maxLength" && (
+                  <span className="text-start text-xl text-red-500">
+                    Not more than 5 characters
+                  </span>
                 )}
               </div>
               <div className="form-control mt-2">

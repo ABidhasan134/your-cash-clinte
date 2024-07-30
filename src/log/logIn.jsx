@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import backgroundImage from "../../public/img/glass-background.jpg";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import logo from '../../public/img/logo.png'
+import { AuthContext } from "../context/authProvider";
 
 const LogIn = () => {
+  const {user}=useContext(AuthContext)
+  console.log(user);
   const {
     register,
     handleSubmit,
