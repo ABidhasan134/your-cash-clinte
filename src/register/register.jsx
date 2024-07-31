@@ -1,14 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
 import logo from "../../public/img/logo.png";
 import moneyBG from "../../public/img/monye.jpg";
 import backgorundRegister from "../../public/img/registerBG.jpg";
+import Swal from 'sweetalert2'
 
 import usePublic from "../hooks/axiosPublic";
+import { AuthContext } from "../context/authProvider";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
-
+  const {setLoading}=useContext(AuthContext);
   const axiosPublic= usePublic()
+  const naviget=useNavigate();
   const {
     register,
     handleSubmit,
@@ -16,18 +20,45 @@ const Register = () => {
     formState: { errors },
   } = useForm();
   // register function
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     const name = data.name;
     const email = data.email;
     const phoneNumber = data.phone;
     const password = data.password;
-    axiosPublic.post("/createUser",data)
-    .then((res)=>console.log(res.data))
-    console.log(data);
-    // axiosSequer
-    //   .post("/jwt", data)
-    //   .then((res) => console.log(res.data))
-    //   .catch((err) => console.error(err));
+    const status= "panding" 
+    const info={name,email,phoneNumber,password,status}   
+    try {
+      const response = await axiosPublic.post("/createUser", info);
+      if (response.data.insertedId) {
+        createUser(name,email,phoneNumber);
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Your account has been created",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        setLoading(false);
+        naviget('/dashboard/user')
+      } else if (response.status === 400 || response.data.message) {
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title:  "You already have an account please Login",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: "You already have an account please Login",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      console.error("Registration error:", error);
+    }
   };
   return (
     <div className="grid justify-center items-center my-6">

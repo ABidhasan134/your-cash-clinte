@@ -3,6 +3,7 @@ import App from "../App";
 import Main from "../layout/main";
 import LogIn from "../log/logIn";
 import Register from "../register/register";
+import Dashbord from "../layout/dashbord";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,16 @@ const router = createBrowserRouter([
         }
     ]
   },
+  {
+    path: "/dashboard",
+    elemnt: <Dashbord></Dashbord>,
+    children: [
+      {
+        path: "user",
+        element: <App></App>
+      }
+    ]
+  }
 ]);
 
 export default router;
