@@ -1,35 +1,33 @@
-import React, { useContext } from 'react'
-import { AuthContext } from '../context/authProvider'
-import { NavLink, Outlet, useNavigate } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { AuthContext } from '../context/authProvider';
+import { NavLink, Outlet } from 'react-router-dom';
+import Balance from '../shared/balance';
 
-const Dashbord = () => {
-    const {loading,user}=useContext(AuthContext);
+const Dashboard = () => {
+  const { loading, user } = useContext(AuthContext);
 
-    
-    if(loading){
-        return "loading......"
+  console.log(user);
+  const dashboardLinks = () => {
+    if(user){
+     return <ul className='bg-red-500'>
+        <li><NavLink to="/dashboard/balance">Balance</NavLink></li>
+        <li><NavLink to="/dashboard/cashout">Cash Out</NavLink></li>
+        <li><NavLink to="/dashboard/send-money">Send Money</NavLink></li>
+        <li><NavLink to="/dashboard/cashOut">Cash out</NavLink></li>
+      </ul>
     }
-
-    const dashbordLinks=()=>{
-        if(user){
-            return <ul>
-                <li><NavLink>Balance</NavLink></li>
-                <li><NavLink>Cash out</NavLink></li>
-                <li><NavLink>Send Money</NavLink></li>
-            </ul>
-        }
-    }
+  };
 
   return (
-    <div>
-      <div>
-        {dashbordLinks()}
+    <div className='border-4 border-red-500 bg-green-600 grid container mx-auto min-h-lvh'>
+      <div >
+        {dashboardLinks()}
       </div>
       <div>
         <Outlet></Outlet>
-      </div>
+        </div>
     </div>
-  )
-}
+  );
+};
 
-export default Dashbord
+export default Dashboard;

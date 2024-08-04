@@ -5,7 +5,8 @@ import LogIn from "../log/logIn";
 import Register from "../register/register";
 import Dashbord from "../layout/dashbord";
 
-const router = createBrowserRouter([
+const router = createBrowserRouter
+([
   {
     path: "/",
     element: <Main></Main>,
@@ -22,7 +23,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    elemnt: <Dashbord></Dashbord>,
+    element: <Dashbord></Dashbord>,
     children: [
       {
         path: "user",

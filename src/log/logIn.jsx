@@ -4,17 +4,24 @@ import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import logo from '../../public/img/logo.png'
 import { AuthContext } from "../context/authProvider";
+import usePublic from "../hooks/axiosPublic";
 
 const LogIn = () => {
   const {user}=useContext(AuthContext)
-  console.log(user);
+  const axiosPublic=usePublic();
+  // console.log(user);
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = async (data) => {
+    console.log(data);
+    const response= await axiosPublic.post(`/login`,data);
+    console.log(response.data);
+    console.log(data);
+  }
   return (
     <div
       className="hero rounded-3xl min-h-screen w-[1000px] my-6"
