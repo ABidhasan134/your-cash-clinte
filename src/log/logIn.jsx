@@ -1,14 +1,17 @@
 import React, { useContext } from "react";
 import backgroundImage from "../../public/img/glass-background.jpg";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from '../../public/img/logo.png'
 import { AuthContext } from "../context/authProvider";
 import usePublic from "../hooks/axiosPublic";
+import Swal from 'sweetalert2';
 
 const LogIn = () => {
-  const {user}=useContext(AuthContext)
+  const {user,setUser}=useContext(AuthContext)
   const axiosPublic=usePublic();
+  const navigate = useNavigate()
+  
   // console.log(user);
   const {
     register,
@@ -19,8 +22,30 @@ const LogIn = () => {
   const onSubmit = async (data) => {
     console.log(data);
     const response= await axiosPublic.post(`/login`,data);
-    console.log(response.data);
-    console.log(data);
+          console.log(response.data);
+          if(response.data.email===data.email || response.data.phoneNumber=== data.email)
+          {
+            
+            Swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: "Your account has been created",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+            navigate("/dashboard/user")
+            setUser(response.data.name);
+          }
+          else{
+            Swal.fire({
+              position: "top-end",
+              icon: "error",
+              title: "You already have an account. Please log in.",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          }
+    
   }
   return (
     <div
