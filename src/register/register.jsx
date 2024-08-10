@@ -30,6 +30,7 @@ const Register = () => {
       console.log(res)
       setUser(name);
       if(res.data.insertedId){
+        localStorage.setItem('user', JSON.stringify(name));
         Swal.fire({
                 position: "top-end",
                 icon: "success",

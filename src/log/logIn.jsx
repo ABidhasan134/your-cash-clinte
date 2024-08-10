@@ -24,7 +24,8 @@ const LogIn = () => {
     const response= await axiosPublic.post(`/login`,data);
           console.log(response.data);
           if(response.data.email===data.email || response.data.phoneNumber=== data.email)
-          {
+            {
+            localStorage.setItem('user', JSON.stringify(response.data.name));
             
             Swal.fire({
               position: "top-end",

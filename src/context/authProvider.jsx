@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react'
+import React, { createContext, useContext, useEffect, useState } from 'react'
 import usePublic from '../hooks/axiosPublic';
 
 
@@ -11,39 +11,28 @@ const AuthProvider = ({children}) => {
   const axiosPublic=usePublic();
     const [user,setUser]=useState(null);
     const [loading,setLoading]=useState(true);
-   
+    console.log(user)  
 
     const createUser=(name,email,phone)=>{
       setUser(name);
       return 0
         }
+// usering local storage for hold the user or unsubscribe
+        useEffect(() => {
+          // Check if there's a user stored in local storage
+          const storedUser = localStorage.getItem('user');
+          if (storedUser && storedUser !== "undefined" && storedUser !== "null") {
+            try {
+              setUser(JSON.parse(storedUser)); // Set the stored user as the current user
+              axiosPublic.get('/jwt')
+              .then((res)=>console.log(res))
+            } catch (error) {
+              console.error("Failed to parse user from localStorage", error);
+            }
+          }
+          setLoading(false);
+        }, []);
 
-        // const logInUser=async(data)=>{
-        //   const response= await axiosPublic.post(`/login`,data);
-        //   console.log(response.data.success);
-        //   if(response.data.success===true)
-        //   {
-            
-        //     Swal.fire({
-        //       position: "top-end",
-        //       icon: "success",
-        //       title: "Your account has been created",
-        //       showConfirmButton: false,
-        //       timer: 1500,
-        //     });
-        //     navigate("/dashboard/user")
-        //   }
-        //   else{
-        //     Swal.fire({
-        //       position: "top-end",
-        //       icon: "error",
-        //       title: "You already have an account. Please log in.",
-        //       showConfirmButton: false,
-        //       timer: 1500,
-        //     });
-        //   }
-        //   // console.log(response.data);
-        // }
     const authInfo={user,setUser,createUser,loading,setLoading}
   return (
     <AuthContext.Provider value={authInfo}>

@@ -6,7 +6,7 @@ import Balance from '../shared/balance';
 const Dashboard = () => {
   const { loading, user } = useContext(AuthContext);
 
-  console.log(user);
+  // console.log(user);
   const dashboardLinks = () => {
     if(user){
      return <ul className='bg-red-500'>
