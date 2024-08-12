@@ -25,7 +25,7 @@ const LogIn = () => {
           console.log(response.data);
           if(response.data.email===data.email || response.data.phoneNumber=== data.email)
             {
-            localStorage.setItem('user', JSON.stringify(response.data.name));
+            localStorage.setItem('user', JSON.stringify(response.data));
             
             Swal.fire({
               position: "top-end",
