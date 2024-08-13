@@ -26,7 +26,7 @@ const AuthProvider = ({ children }) => {
         axiosSequer
           .post("/jwt", parsedUser)
           .then((res) => {
-            console.log(res.data);
+            // console.log(res.data);
           })
           .catch((error) => console.error("JWT verification failed", error));
       } catch (error) {
@@ -34,7 +34,8 @@ const AuthProvider = ({ children }) => {
       }
     }
     setLoading(false);
-  }, []);
+    // user use as depandency becuase the user when change component should be mounted
+  }, [user]);
 
   const authInfo = { user, setUser, createUser, loading, setLoading };
   return (

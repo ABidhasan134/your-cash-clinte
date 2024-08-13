@@ -17,6 +17,7 @@ const useSequer = () => {
       const token = cookies.get('token');  // Access the token from cookies
       if (token) {
         config.headers.Authorization = `Bearer ${token}`; // Attach token to headers if exists
+        console.log(config.headers.Authorization)
       }
       return config;
     }, 
@@ -30,7 +31,7 @@ const useSequer = () => {
     function (response) {
       // Any status code that lies within the range of 2xx causes this function to trigger
       // Do something with response data
-      console.log(response);
+      // console.log(response);
       return response;
     }, 
     function (error) {
