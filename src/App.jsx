@@ -5,7 +5,7 @@ import { AuthContext } from "./context/authProvider"
 function App() {
 
  const {user}=useContext(AuthContext);
-//  console.log(user);
+ console.log(user);
   return (
     <>
       <div className="card bg-base-100 w-96 shadow-xl">

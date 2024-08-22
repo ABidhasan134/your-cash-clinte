@@ -6,12 +6,9 @@ import { RiMoneyDollarCircleLine } from "react-icons/ri";
 
 const Dashboard = () => {
   const { loading, user } = useContext(AuthContext);
-  const [toggel, setToggol] = useState(false);
+  // console.log(user)
 
-  const handelChackBalenc = () => {
-    setToggol(!toggel);
-    console.log("handelChackBalenc");
-  };
+  
 
   // console.log(user);
   const dashboardLinks = () => {
@@ -19,17 +16,7 @@ const Dashboard = () => {
       return (
         <ul className="grid grid-flow-row grid-cols-2 font-bold text-2xl">
           <li className="bg-black m-2 p-2 flex justify-center hover:bg-sky-800 hover:text-white rounded-lg">
-            <button
-              onClick={handelChackBalenc}
-              className="flex items-center gap-2 "
-            >
-              <RiMoneyDollarCircleLine
-                className={`${toggel ? "text-green-600 relative -right-24" : "text-white" } transition`}
-              ></RiMoneyDollarCircleLine>
-              {
-                toggel?"help":<span>Balance</span>
-              }
-            </button>
+           <Balance></Balance>
           </li>
           <li className="bg-black m-2 p-2 flex justify-center hover:bg-sky-800 hover:text-white rounded-lg">
             <NavLink to="/dashboard/cashIn">Cash In</NavLink>
