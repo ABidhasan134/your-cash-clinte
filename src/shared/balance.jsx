@@ -1,31 +1,39 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { RiMoneyDollarCircleLine } from 'react-icons/ri';
 import useUserDitails from '../hooks/useUserDitails';
 
 const Balance = () => {
   const [toggel, setToggol] = useState(false);
-  const [users,isLoading,isError,error,refetch]=useUserDitails();
+  const [users, isLoading, isError, error, refetch] = useUserDitails();
+
   const handelChackBalenc = () => {
     setToggol(!toggel);
-    console.log("handelChackBalenc");
+    setTimeout(()=>{
+      setToggol(false);
+    },3000);
+    refetch();
   };
-  console.log(users)
+
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error: {error.message}</div>;
+
   return (
     <div>
-      <button
-              onClick={handelChackBalenc}
-              className="flex items-center gap-2 "
-            >
-              <RiMoneyDollarCircleLine
-                className={`${toggel ? "text-green-600 relative -right-24" : "text-white" } transition`}
-              ></RiMoneyDollarCircleLine>
-              {
-                toggel?"help":<span>Balance</span>
-              }
-            </button>
-            <div></div>
-    </div>
-  )
-}
+      <button onClick={handelChackBalenc} className="flex items-center gap-2">
+        <RiMoneyDollarCircleLine
+          className={`${toggel ? "text-green-600 relative -right-24" : "text-white"} transition`}
+        />
+        <span>{toggel ? <></> : "Balance"}</span>
+        {toggel && users && (
+        <div>
+          <p>{users.amount}</p>
+        </div>
+      )}
+      </button>
 
-export default Balance
+      
+    </div>
+  );
+};
+
+export default Balance;
