@@ -4,6 +4,7 @@ import Main from "../layout/main";
 import LogIn from "../log/logIn";
 import Register from "../register/register";
 import Dashbord from "../layout/dashbord";
+import PrivetRouter from "./privetRouter";
 
 const router = createBrowserRouter
 ([
@@ -23,7 +24,7 @@ const router = createBrowserRouter
   },
   {
     path: "/dashboard",
-    element: <Dashbord></Dashbord>,
+    element: <PrivetRouter><Dashbord></Dashbord></PrivetRouter>,
     children: [
       {
         path: "user",
