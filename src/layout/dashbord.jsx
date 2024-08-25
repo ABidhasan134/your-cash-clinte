@@ -3,6 +3,7 @@ import { AuthContext } from "../context/authProvider";
 import { NavLink, Outlet } from "react-router-dom";
 import Balance from "../shared/balance";
 import { RiMoneyDollarCircleLine } from "react-icons/ri";
+import SendMoney from "../Dashbord/user/sendMoney";
 
 const Dashboard = () => {
   const { loading, user } = useContext(AuthContext);
@@ -21,8 +22,9 @@ const Dashboard = () => {
           <li className="bg-black m-2 p-2 flex justify-center hover:bg-sky-800 hover:text-white rounded-lg">
             <NavLink to="/dashboard/cashIn">Cash In</NavLink>
           </li>
+            {/* <NavLink to="/dashboard/sendMoney"></NavLink> */}
           <li className="bg-black m-2 p-2 flex justify-center hover:bg-sky-800 hover:text-white rounded-lg">
-            <NavLink to="/dashboard/send-money">Send Money</NavLink>
+            <SendMoney className="bg-black m-2 p-2 flex justify-center hover:bg-sky-800 hover:text-white rounded-lg"></SendMoney>
           </li>
           <li className="bg-black m-2 p-2 flex justify-center hover:bg-sky-800 hover:text-white rounded-lg">
             <NavLink to="/dashboard/cashOut">Cash out</NavLink>

@@ -15,7 +15,7 @@ const Balance = () => {
   };
 
   if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error: {error.message}</div>;
+  if (isError) return <div>Reloade please</div>;
 
   return (
     <div>
@@ -26,7 +26,7 @@ const Balance = () => {
         <span>{toggel ? <></> : "Balance"}</span>
         {toggel && users && (
         <div>
-          <p>{users.amount}</p>
+          <p>{users.amount || "00"}  </p>
         </div>
       )}
       </button>
