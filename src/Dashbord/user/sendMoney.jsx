@@ -2,10 +2,15 @@ import React from 'react'
 import { useForm } from "react-hook-form"
 import useSequer from '../../hooks/axiosSequer'
 import useUserDitails from '../../hooks/useUserDitails'
+import Swal from 'sweetalert2'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom'
 
 const SendMoney = () => {
   const [users,isLoading,isError,error,refetch]=useUserDitails();
   // console.log(users)
+  const naviget=useNavigate();
   const sendernumber= users.phoneNumber;
   const axiosSequer=useSequer()
     const {
@@ -22,9 +27,37 @@ const SendMoney = () => {
           return 
         }
         // console.log(data)
-        axiosSequer.post("/sendMoney", info)
+        axiosSequer.patch("/sendMoney", info)
         .then((res)=>{
           console.log(res.data);
+          if(res.data.error==="NotHaveEnoughMoney")
+          {
+            toast.error("Your don't Have Enough Money");
+            return;
+          }
+          if(res.data.error==="InvalidPassword")
+          {
+            toast.error("your password is invalid");
+            return;
+          }
+          if(res.data.error==="NotFound"){
+            toast.error("Please enter a valid number");
+            return;
+          }
+          if(res.data.error==="NotAvalidUser"){
+            toast.error("Please enter a valid user")
+          }
+          if(res.data.modifiedCount>0){
+            toast.success("Your payment has been successfully send")
+            setTimeout(()=>{
+              naviget('/dashboard/user')
+            },3000);
+            return;
+          }
+          if(res.data.error==='balance'){
+            toast.error("your need to send upper then 10tk")
+            return;
+          }
         })
       })
   return (
@@ -32,9 +65,10 @@ const SendMoney = () => {
         <button className="btn font-bold text-2xl btn-ghost hover:btn-ghost hover:bg-tr bg-black" onClick={()=>document.getElementById('my_modal_1').showModal()}>send Money</button>
 <dialog id="my_modal_1" className="modal">
   <div className="modal-box grid justify-center">
-    <h3 className="font-bold text-lg text-center">Send Money</h3>
+    <h3 className="font-bold text-2xl text-center">Send Money</h3>
     <form className='grid gap-2' onSubmit={handleSubmit(onSubmit)}>
       {/* phone number */}
+      <p className='font-extralight text-xl'>Phone Number</p>
     <input
                     type='tel'
                     placeholder="phone"
@@ -50,6 +84,7 @@ const SendMoney = () => {
                   <span className="text-start text-xl text-red-500">Give a valid number</span>
                 )}
                   {/* password */}
+                  <p className='font-extralight text-xl'>PIN</p>
                   <input
                   type="password"
                   placeholder="Password"
@@ -70,6 +105,7 @@ const SendMoney = () => {
                   <span className="text-start text-xl text-red-500">Not more than 5 characters</span>
                 )}
                 {/* amount of send money */}
+                <p className='font-extralight text-xl'>Amount</p>
                   <input
                     type="number"
                     placeholder="amount"
@@ -85,6 +121,7 @@ const SendMoney = () => {
       <form method="dialog">
         {/* if there is a button in form, it will close the modal */}
         <button className="btn">Close</button>
+  <ToastContainer />
       </form>
     </div>
   </div>
