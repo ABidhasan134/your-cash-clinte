@@ -1,10 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { RiMoneyDollarCircleLine } from 'react-icons/ri';
 import useUserDitails from '../hooks/useUserDitails';
 
 const Balance = () => {
   const [toggel, setToggol] = useState(false);
   const [users, isLoading, isError, error, refetch] = useUserDitails();
+  // when I log in I should refetch 
+  useEffect(() => {
+    if (isError) {
+      refetch();
+    }
+  }, [isError, refetch]);
 
   const handelChackBalenc = () => {
     setToggol(!toggel);
