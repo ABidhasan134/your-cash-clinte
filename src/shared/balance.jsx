@@ -5,6 +5,7 @@ import useUserDitails from '../hooks/useUserDitails';
 const Balance = () => {
   const [toggel, setToggol] = useState(false);
   const [users, isLoading, isError, error, refetch] = useUserDitails();
+  console.log(users)
   // when I log in I should refetch 
   useEffect(() => {
     if (isError) {

@@ -4,6 +4,8 @@ import { NavLink, Outlet } from "react-router-dom";
 import Balance from "../shared/balance";
 import { RiMoneyDollarCircleLine } from "react-icons/ri";
 import SendMoney from "../Dashbord/user/sendMoney";
+import LogOut from "../log/logOut";
+
 
 const Dashboard = () => {
   const { loading, user } = useContext(AuthContext);
@@ -39,6 +41,13 @@ const Dashboard = () => {
 
   return (
     <div className="border-4 border-red-500 justify-center items-center grid container mx-auto min-h-lvh">
+      <nav className="flex justify-between border-b-2 border-b-white rounded-lg">
+        <h1 className="text-2xl font-bold">Your cash</h1>
+        <div className="flex gap-2 items-center">
+        <p>{user}</p>
+        <LogOut></LogOut>
+        </div>
+      </nav>
       <div>{dashboardLinks()}</div>
       <div>
         <Outlet></Outlet>
