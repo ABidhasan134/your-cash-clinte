@@ -1,14 +1,20 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import logIcon from "../../public/img/logOutIcon.gif"
 import cookie from 'react-cookies'
 
 const LogOut = () => {
+    const [userinfo,setuserinfo]=useState()
+    useEffect(()=>{
+
+    },[userinfo])
+
     const handleLogout = () => {
         const cooki= cookie.loadAll() 
-        // const cooki1= cookie.load('your_cash') 
-        // console.log(cooki1);
-        
-console.log(cooki); 
+        setuserinfo(localStorage.removeItem('user'))
+        // const removecookie=cookie.remove("your_cash"); 
+        cookie.remove("your_cash", { path: '/' });
+        console.log(cooki,userinfo);
+        window.location.reload();
     }
 
     return (
