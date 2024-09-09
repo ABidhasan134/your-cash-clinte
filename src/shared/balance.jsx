@@ -5,13 +5,13 @@ import useUserDitails from '../hooks/useUserDitails';
 const Balance = () => {
   const [toggel, setToggol] = useState(false);
   const [users, isLoading, isError, error, refetch] = useUserDitails();
-  console.log(users)
+  // console.log(users)
   // when I log in I should refetch 
   useEffect(() => {
     if (isError) {
       refetch();
     }
-  }, [isError, refetch]);
+  }, [isError, refetch,users.amount]);
 
   const handelChackBalenc = () => {
     setToggol(!toggel);

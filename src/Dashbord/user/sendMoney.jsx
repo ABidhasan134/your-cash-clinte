@@ -5,7 +5,7 @@ import useUserDitails from '../../hooks/useUserDitails'
 import Swal from 'sweetalert2'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const SendMoney = () => {
   const [users,isLoading,isError,error,refetch]=useUserDitails();
@@ -58,8 +58,14 @@ const SendMoney = () => {
             toast.error("your need to send upper then 10tk")
             return;
           }
+          else{
+            toast.error("Some internal problems occured")
+          }
         })
       })
+      const handelClose=()=>{
+        window.location.reload();
+      }
   return (
     <>
         <button className="btn font-bold text-2xl btn-ghost hover:btn-ghost hover:bg-tr bg-black" onClick={()=>document.getElementById('my_modal_1').showModal()}>send Money</button>
@@ -120,7 +126,8 @@ const SendMoney = () => {
     <div className="modal-action">
       <form method="dialog">
         {/* if there is a button in form, it will close the modal */}
-        <button className="btn">Close</button>
+        {/* <Link to='/dashboard/user'><button className="btn">Close</button></Link> */}
+        <button className="btn" onClick={handelClose}>Close</button>
   <ToastContainer />
       </form>
     </div>

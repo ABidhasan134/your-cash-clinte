@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import logIcon from "../../public/img/logOutIcon.gif"
 import cookie from 'react-cookies'
+import Cookies from 'js-cookie'
+
 
 const LogOut = () => {
     const [userinfo,setuserinfo]=useState()
@@ -9,13 +11,14 @@ const LogOut = () => {
     },[userinfo])
 
     const handleLogout = () => {
-        const cooki= cookie.loadAll() 
-        setuserinfo(localStorage.removeItem('user'))
-        // const removecookie=cookie.remove("your_cash"); 
-        cookie.remove("your_cash", { path: '/' });
-        console.log(cooki,userinfo);
+        const cooki = cookie.remove("your_cash"); // This will list all cookies
+        console.log(cooki); // Check if your token is listed
+        // const Cookies1=Cookies.get("your_cash");
+        // console.log(Cookies1)
+        window.localStorage.removeItem('user');
         window.location.reload();
     }
+    
 
     return (
         <div>
