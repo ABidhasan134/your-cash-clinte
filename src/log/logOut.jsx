@@ -5,7 +5,8 @@ import Cookies from 'js-cookie'
 
 
 const LogOut = () => {
-    const [userinfo,setuserinfo]=useState()
+    // const [userinfo,setuserinfo]=useState()
+    const userinfo=window.localStorage.getItem('user')
     useEffect(()=>{
 
     },[userinfo])

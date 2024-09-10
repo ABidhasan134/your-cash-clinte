@@ -32,7 +32,7 @@ const Dashboard = () => {
             <NavLink to="/dashboard/cashOut">Cash out</NavLink>
           </li>
           <li className="bg-black m-2 p-2 flex justify-center hover:bg-sky-800 hover:text-white rounded-lg">
-            <NavLink to="/dashboard/cashOut">History</NavLink>
+            <NavLink to="/dashboard/history">History</NavLink>
           </li>
         </ul>
       );
