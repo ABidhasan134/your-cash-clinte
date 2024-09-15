@@ -3,8 +3,8 @@ import { Outlet } from 'react-router-dom'
 
 const Main = () => {
   return (
-    <div className='container mx-auto grid justify-center 
-    items-center'>
+    <div className='container mx-auto grid 
+    items-center '>
       <Outlet></Outlet>
     </div>
   )

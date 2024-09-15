@@ -5,17 +5,16 @@ import Balance from "../shared/balance";
 import { RiMoneyDollarCircleLine } from "react-icons/ri";
 import SendMoney from "../Dashbord/user/sendMoney";
 import LogOut from "../log/logOut";
+import useUserDitails from "../hooks/useUserDitails";
 
 
 const Dashboard = () => {
   const { loading, user } = useContext(AuthContext);
-  // console.log(user)
+  const [users] = useUserDitails()
 
-  
-
-  // console.log(user);
+ console.log(users);
   const dashboardLinks = () => {
-    if (user) {
+    if (user && users.roll==="user") {
       return (
         <ul className="grid grid-flow-row grid-cols-2 font-bold text-2xl">
           <li className="bg-black m-2 p-2 flex justify-center hover:bg-sky-800 hover:text-white rounded-lg">
@@ -29,7 +28,7 @@ const Dashboard = () => {
             <SendMoney className="bg-black m-2 p-2 flex justify-center hover:bg-sky-800 hover:text-white rounded-lg"></SendMoney>
           </li>
           <li className="bg-black m-2 p-2 flex justify-center hover:bg-sky-800 hover:text-white rounded-lg">
-            <NavLink to="/dashboard/cashOut">Cash out</NavLink>
+            <NavLink to="/cashOut">Cash out</NavLink>
           </li>
           <li className="bg-black m-2 p-2 flex justify-center hover:bg-sky-800 hover:text-white rounded-lg">
             <NavLink to="/dashboard/history">History</NavLink>

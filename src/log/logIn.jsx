@@ -49,8 +49,9 @@ const LogIn = () => {
     
   }
   return (
-    <div
-      className="hero rounded-3xl min-h-screen w-[1000px] my-6"
+    <div className="grid justify-center">
+      <div
+      className="hero rounded-3xl min-h-screen w-[1000px] my-6 grid justify-center"
       style={{
         backgroundImage: `url(${backgroundImage})`,
       }}
@@ -120,6 +121,7 @@ const LogIn = () => {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 };

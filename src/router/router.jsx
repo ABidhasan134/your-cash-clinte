@@ -6,6 +6,7 @@ import LogIn from "../log/logIn";
 import Register from "../register/register";
 import History from "../shared/history/history";
 import PrivetRouter from "./privetRouter";
+import CashOut from "../shared/cash out/cashOut";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
         path: "/singup",
         element: <Register></Register>,
       },
+      {
+        path: 'cashOut',
+        element: <CashOut></CashOut>
+      }
     ],
   },
   {
@@ -38,6 +43,10 @@ const router = createBrowserRouter([
         path: "history",
         element: <History></History>,
       },
+      {
+        path: 'cashOut',
+        element: <CashOut></CashOut>
+      }
     ],
   },
 ]);
