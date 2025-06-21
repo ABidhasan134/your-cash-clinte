@@ -10,9 +10,12 @@ import useUserDitails from "../hooks/useUserDitails";
 
 const Dashboard = () => {
   const { loading, user } = useContext(AuthContext);
-  const [users] = useUserDitails()
+  const [users,isLoading,isError] = useUserDitails()
 
- console.log(users);
+  if(loading || isLoading){
+    return <div>Loading...</div>
+  }
+ console.log("user is here",user);
   const dashboardLinks = () => {
     if (user && users.roll==="user") {
       return (
