@@ -9,9 +9,9 @@ import { Link, useNavigate } from 'react-router-dom'
 
 const SendMoney = () => {
   const [users,isLoading,isError,error,refetch]=useUserDitails();
-  // console.log(users)
+  // console.log("this is user to try sendmoney",users);
   const naviget=useNavigate();
-  const sendernumber= users.phoneNumber;
+  const {sendernumber,amount}= users;
   const axiosSequer=useSequer()
     const {
         register,

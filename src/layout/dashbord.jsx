@@ -15,9 +15,10 @@ const Dashboard = () => {
   if(loading || isLoading){
     return <div>Loading...</div>
   }
- console.log("user is here",user);
+ console.log("user is here",users);
+//  && users.roll==="user"
   const dashboardLinks = () => {
-    if (user && users.roll==="user") {
+    if (user ) {
       return (
         <ul className="grid grid-flow-row grid-cols-2 font-bold text-2xl">
           <li className="bg-black m-2 p-2 flex justify-center hover:bg-sky-800 hover:text-white rounded-lg">
