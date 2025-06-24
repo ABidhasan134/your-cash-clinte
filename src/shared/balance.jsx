@@ -21,24 +21,25 @@ const Balance = () => {
     refetch();
   };
 
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Reloade please</div>;
+  if (isLoading) return <div className="text-2xl font-bold">Loading...</div>;
+  if (isError) return <div className="text-2xl font-bold">Reloade please</div>;
 
   return (
     <div>
+      <p>your wallet balance</p>
       <button onClick={handelChackBalenc} className="flex items-center gap-2">
         <RiMoneyDollarCircleLine
-          className={`transition-all duration-1000 ease-in-out ${
+          className={`transition-all duration-1000 ease-in-out text-2xl font-bold ${
             toggel
               ? "animate-bounce text-green-600 relative -right-24"
               : "text-white"
           }`}
         />
 
-        <span>{toggel ? <></> : "Balance"}</span>
+        <span className="text-2xl font-bold">{toggel ? <></> : "Balance"}</span>
         {toggel && users && (
           <div>
-            <p>{users.amount || "00"} </p>
+            <p className="text-2xl font-bold">{users.amount || "00"} </p>
           </div>
         )}
       </button>
