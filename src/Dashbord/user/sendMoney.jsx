@@ -6,6 +6,7 @@ import Swal from 'sweetalert2'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Link, useNavigate } from 'react-router-dom'
+import sendMoneyImg from '../../../public/img/arrow.png'
 
 const SendMoney = () => {
   const [users,isLoading,isError,error,refetch]=useUserDitails();
@@ -68,7 +69,7 @@ const SendMoney = () => {
       }
   return (
     <>
-        <button className="btn font-bold text-2xl btn-ghost hover:btn-ghost hover:bg-tr bg-black" onClick={()=>document.getElementById('my_modal_1').showModal()}>send Money</button>
+        <button className='text-white' onClick={()=>document.getElementById('my_modal_1').showModal()}><img src={sendMoneyImg} alt='send money' className='navLinks'/></button>
 <dialog id="my_modal_1" className="modal">
   <div className="modal-box grid justify-center">
     <h3 className="font-bold text-2xl text-center">Send Money</h3>

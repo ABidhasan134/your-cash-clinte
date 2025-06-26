@@ -7,6 +7,10 @@ import SendMoney from "../Dashbord/user/sendMoney";
 import LogOut from "../log/logOut";
 import useUserDitails from "../hooks/useUserDitails";
 import user1 from "../../public/img/user1.png";
+import cashIn from '../../public/img/money.png'
+import withdraw from '../../public/img/withdraw.png'
+import parchment from '../../public/img/parchment.png'
+
 
 const Dashboard = () => {
   const { loading, user } = useContext(AuthContext);
@@ -15,24 +19,28 @@ const Dashboard = () => {
   if (loading || isLoading) {
     return <div>Loading...</div>;
   }
-  console.log("user is here", users);
+  // console.log("user is here", users);
   //  && users.roll==="user"
   const dashboardLinks = () => {
     if (user) {
       return (
         <ul className="grid grid-flow-row grid-cols-2 font-bold text-2xl">
-          <li className="bg-black m-2 p-2 flex justify-center hover:bg-sky-800 hover:text-white rounded-lg">
-            <NavLink to="/dashboard/cashIn">Cash In</NavLink>
+          <li className="grid  justify-center">
+            <NavLink to="/dashboard/cashIn"><img src={cashIn} alt="cash In"className="navLinks" /></NavLink>
+            <span className="text-xl text-center">Cash In</span>
           </li>
           {/* <NavLink to="/dashboard/sendMoney"></NavLink> */}
-          <li className="bg-black m-2 p-2 flex justify-center hover:bg-sky-800 hover:text-white rounded-lg">
-            <SendMoney className="bg-black m-2 p-2 flex justify-center hover:bg-sky-800 hover:text-white rounded-lg"></SendMoney>
+          <li className="grid  justify-center">
+            <SendMoney ></SendMoney>
+            <span className="text-xl text-center">Send Money</span>
           </li>
-          <li className="bg-black m-2 p-2 flex justify-center hover:bg-sky-800 hover:text-white rounded-lg">
-            <NavLink to="/cashOut">Cash out</NavLink>
+          <li className="grid justify-center">
+            <NavLink to="/cashOut"><img src={withdraw} alt="Cash Out" className="navLinks" /></NavLink>
+            <span className="text-xl text-center">Cash Out</span>
           </li>
-          <li className="bg-black m-2 p-2 flex justify-center hover:bg-sky-800 hover:text-white rounded-lg">
-            <NavLink to="/dashboard/history">History</NavLink>
+          <li className="grid justify-center">
+            <NavLink to="/dashboard/history"><img src={parchment} alt="History" className="navLinks"/></NavLink>
+            <span className="text-xl text-center">History</span>
           </li>
         </ul>
       );
