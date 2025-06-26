@@ -7,7 +7,7 @@ const LogOut = () => {
   const userinfo = window.localStorage.getItem("user");
   useEffect(() => {}, [userinfo]);
   const cookieOut = Cookies.get("your_cash");
-    console.log(cookieOut);
+    // console.log(cookieOut);
   const handleLogout = () => {
     // const cookieOut = Cookies.get("your_cash");
     // console.log(cookieOut);

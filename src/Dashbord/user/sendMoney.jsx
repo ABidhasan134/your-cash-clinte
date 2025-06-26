@@ -12,7 +12,8 @@ const SendMoney = () => {
   const [users,isLoading,isError,error,refetch]=useUserDitails();
   // console.log("this is user to try sendmoney",users);
   const naviget=useNavigate();
-  const {sendernumber,amount}= users;
+  const {phoneNumber,amount}= users;
+  console.log('user from send money',phoneNumber,amount)
   const axiosSequer=useSequer()
     const {
         register,
@@ -21,9 +22,9 @@ const SendMoney = () => {
         formState: { errors },
       } = useForm()
       const onSubmit = ((data) => {
-        const info={sendernumber,phone:data.phone,password:data.password,amount:data.amount}
+        const info={phoneNumber,phone:data.phone,password:data.password,amount:data.amount}
         console.log(info);
-        if(sendernumber === data.phone){
+        if(phoneNumber === data.phone){
           alert("you can't send money to yourself")
           return 
         }
