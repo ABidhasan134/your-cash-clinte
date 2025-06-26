@@ -56,7 +56,7 @@ const Dashboard = () => {
           <Balance></Balance>
         </li>
         <div className="flex items-center justify-center">
-          <p>QR</p>
+          <img src={users?.phoneQR} alt="QR" className="bg-transparent h-[100px] w-[100px]"/>
         </div>
         </div>
         {dashboardLinks()}

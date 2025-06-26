@@ -7,6 +7,8 @@ import Swal from 'sweetalert2';
 import usePublic from "../hooks/axiosPublic";
 import { AuthContext } from "../context/authProvider";
 import { useNavigate } from "react-router-dom";
+import QRCode from 'qrcode'; 
+
 
 const Register = () => {
   const { setLoading,setUser } = useContext(AuthContext);
@@ -23,8 +25,16 @@ const Register = () => {
   const onSubmit = async (data) => {
     const { name, email, phone, password } = data;
     const status = "pending";
-    const info = { name, email, phoneNumber: phone, password, status };
-
+const phoneQR = await QRCode.toDataURL(`tel:${phone}`, {
+  color: {
+    dark: "#00ffff",    
+    light: "#00000000", 
+  },
+  margin: 1,             
+  scale: 10              
+});
+    const info = { name, email, phoneNumber: phone, password, status,phoneQR };
+     console.log("QR code genaret by js",phoneQR);
     axiosPublic.post('/createUser',info)
     .then((res)=>{
       console.log(res)
