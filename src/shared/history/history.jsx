@@ -18,6 +18,7 @@ const History = () => {
     <tbody>
       {/* row 1 */}
       {
+        user.history?
         user.history.map((itmes,index)=>{
           return <tr>
         <th>{itmes.trangistion_id}</th>
@@ -25,7 +26,7 @@ const History = () => {
         <td>{itmes.history_amount}</td>
         <td>{itmes.history_date}</td>
       </tr>
-        })
+        }): <p>still Your dosen't have any trangection</p>
       }
       
     </tbody>

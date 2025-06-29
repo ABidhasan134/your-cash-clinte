@@ -16,10 +16,10 @@ const Dashboard = () => {
   const { loading, user } = useContext(AuthContext);
   const [users, isLoading, isError] = useUserDitails();
 
-  if (loading || isLoading) {
+  if (isLoading) {
     return <div>Loading...</div>;
   }
-  // console.log("user is here", users);
+  console.log("user is here", users);
   //  && users.roll==="user"
   const dashboardLinks = () => {
     if (user) {

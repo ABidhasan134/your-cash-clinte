@@ -26,7 +26,7 @@ const AuthProvider = ({ children }) => {
         axiosSequer
           .post("/jwt", parsedUser)
           .then((res) => {
-            // console.log(res.data);
+            console.log("this data from authprovider for jwt",res.data);
           })
           .catch((error) => console.error("JWT verification failed", error));
       } catch (error) {

@@ -1,6 +1,5 @@
+'use client '
 import { useQuery } from '@tanstack/react-query'
-import React, { useContext } from 'react'
-import { AuthContext } from '../context/authProvider'
 import usePublic from './axiosPublic';
 
 const useUserDitails = () => {
@@ -14,6 +13,7 @@ const useUserDitails = () => {
         queryKey: ["users"],
         queryFn:async()=>{
             const res=await axiosPublic.get(`/users/${userEmail.email}`);
+            console.log("this respons from the user hook",res)
             return res.data;
         }
     })
