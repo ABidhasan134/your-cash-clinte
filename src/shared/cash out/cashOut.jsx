@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import useUserDitails from "../../hooks/useUserDitails";
 import { FaArrowLeft } from "react-icons/fa";
+import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
 const CashOut = () => {
@@ -8,6 +9,16 @@ const CashOut = () => {
   console.log(user);
   return (
     <>
+     <motion.div
+      initial={{ opacity: 0, y: 50 }}     
+      animate={{ opacity: 1, y: 0 }}      
+      exit={{ opacity: 0, y: -50 }}       
+      transition={{ duration: 0.5, ease: "easeInOut" }}
+      className="p-6 bg-white rounded-lg shadow-lg"
+    >
+      <h2 className="text-2xl font-bold mb-4">Cash Out</h2>
+      
+    
       <div className="flex justify-evenly">
         {/* back btn */}
         <button
@@ -40,6 +51,7 @@ const CashOut = () => {
         <h1 className="text-5xl font-bold">Cash out</h1>
       </div>
       <section>history</section>
+      </motion.div>
     </>
   );
 };

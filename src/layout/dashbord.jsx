@@ -10,13 +10,15 @@ import user1 from "../../public/img/user1.png";
 import cashIn from '../../public/img/money.png'
 import withdraw from '../../public/img/withdraw.png'
 import parchment from '../../public/img/parchment.png'
+import { AnimatePresence } from "framer-motion";
+
 
 
 const Dashboard = () => {
   const { loading, user } = useContext(AuthContext);
   const [users, isLoading, isError] = useUserDitails();
 
-  if (isLoading) {
+  if (isLoading || loading) {
     return <div>Loading...</div>;
   }
   console.log("user is here", users);
@@ -70,7 +72,9 @@ const Dashboard = () => {
         {dashboardLinks()}
       </div>
       <div>
+         <AnimatePresence mode="wait">
         <Outlet></Outlet>
+        </AnimatePresence>
       </div>
     </div>
   );
