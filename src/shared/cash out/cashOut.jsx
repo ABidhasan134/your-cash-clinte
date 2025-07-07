@@ -1,39 +1,54 @@
-'use clinte'
-import React, { useState } from "react";
-import useUserDitails from "../../hooks/useUserDitails";
+"use clinte";
+import { motion } from "framer-motion";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { FaArrowCircleRight } from "react-icons/fa";
 import { MdOutlineQrCodeScanner } from "react-icons/md";
-import { motion } from "framer-motion";
+import usePublic from "../../hooks/axiosPublic";
+import useUserDitails from "../../hooks/useUserDitails";
 import History from "../history/history";
-import { useForm } from "react-hook-form";
 
 const CashOut = () => {
   const [user] = useUserDitails();
+  const axiosPublic = usePublic();
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
   } = useForm();
-  const [agentBtn,setAgentBtn]=useState(false)
-
+  const [agentStatus, setAgentStatus] = useState(false);
+  const [btn1,setBtn1]=useState(false);
+  const [agentNumber,setAgentNumber]=useState()
   // this will log the value on every change
- const handleAgentNumberChange = (e) => {
-  const value = e.target.value;
+   const handleAgentNumberChange = (e) => {
+    const value = e.target.value;
 
-  if (value.length === 11) {
-    console.log("valid number", value);
-    setAgentBtn(true);
-  } else {
-    console.log("agent number is not valid", value);
-    setAgentBtn(false);
-  }
-};
+    if (value.length === 11) {
+      console.log("valid number", value);
+      setAgentStatus(true);
+      setAgentNumber(value)
+    } else {
+      console.log("agent number is not valid", value);
+      setAgentStatus(false);
+    }
+  };
   const onSubmit = (data) => {
     console.log("Cash Out Submitted Data:", data);
     // send data to backend here
+    // const res=axiosPublic.patch(`/cashOut`);
+    // console.log(res.data);
   };
-
+  const handelNumAgent = () => {
+    // const value = e.target.value;
+    // if (value.length === 11) {
+      setBtn1(true);
+      // setAgentNumber(value)
+      console.log("agent number is", agentNumber);
+    // } else {
+    //   console.log("agent number is not valid");
+    // }
+  };
   return (
     <motion.div
       initial={{ opacity: 0, y: 50 }}
@@ -46,49 +61,68 @@ const CashOut = () => {
         <h2 className="text-2xl font-bold mb-4">Cash Out</h2>
       </div>
 
-      
-        <div className="relative w-full pt-5 flex justify-center items-center text-center bg-black border-2 border-red-500 py-6">
-          <form action="" onSubmit={handleSubmit(onSubmit)}>
-          <input
-            type="text"
-            placeholder="Enter your agent number"
-            {...register("agentNumber", { required: true })}
-            onChange={handleAgentNumberChange}
-            className="my-5 peer w-[230px] border-0 border-b-2 border-gray-400 bg-transparent py-2.5 text-white text-[17px] placeholder-transparent focus:border-b-[3px] focus:outline-none focus:ring-0 focus:border-b-gradient-to-r focus:from-[#116399] focus:to-[#38caef] font-normal focus:font-bold transition-all duration-200"
-          />
-          <label
-            htmlFor="agentNumber"
-            className="absolute left-40 top-0 text-[17px] text-gray-400 transition-all peer-placeholder-shown:top-5 peer-placeholder-shown:text-[17px] peer-placeholder-shown:cursor-text peer-focus:top-0 peer-focus:text-[17px] peer-focus:text-[#38caef] peer-focus:font-bold"
-          >
-            Agent Number
-          </label>
-          {
-            agentBtn===true?<button type="submit">
-            <FaArrowCircleRight className="text-4xl scale-90 hover:scale-100 duration-[1s] hover:text-[#FF0072]" />
-          </button>:<button type="submit" disabled>
-            <FaArrowCircleRight className="text-4xl text-gray-900" />
-          </button>
-          }
-          
-          </form>
-        </div>
+      <div className="relative w-full pt-5 flex justify-center items-center text-center bg-black border-2 border-red-500 py-6">
+        {/* <form action="" onSubmit={handleSubmit(onSubmit)}> */}
+        <input
+          type="text"
+          placeholder="Enter your agent number"
+          {...register("agentNumber", { required: true })}
+          onChange={handleAgentNumberChange}
+          className={`${btn1 === true ? "relative -left-96 hidden" : "my-5 peer w-[230px] border-0 border-b-2 border-gray-400 bg-transparent py-2.5 text-white text-[17px] placeholder-transparent focus:border-b-[3px] focus:outline-none focus:ring-0 focus:border-b-gradient-to-r focus:from-[#116399] focus:to-[#38caef] font-normal focus:font-bold transition-all duration-200"}`}
+        />
 
-        {errors.agentNumber && (
-          <p className="text-red-500 text-sm text-center -mt-3">
-            Agent number is required
-          </p>
-        )}
+        <label
+          htmlFor="agentNumber"
+          className={`${btn1 === true ? "absolute -left-96" : "absolute left-40 top-0 text-[17px] text-gray-400 transition-all peer-placeholder-shown:top-5 peer-placeholder-shown:text-[17px] peer-placeholder-shown:cursor-text peer-focus:top-0 peer-focus:text-[17px] peer-focus:text-[#38caef] peer-focus:font-bold"}`}
+        >
+          Agent Number
+        </label>
 
-        <div className="grid justify-center items-center">
-          <button
-            type="button"
-            className="max-w-[280px] flex relative left-40 items-center gap-2 text-center font-bold text-[18px] tracking-[2px] uppercase px-8 py-3 border-4 border-[#FF0072] rounded-sm shadow-md shadow-black/10 transition-all duration-300 ease-in-out hover:text-white hover:scale-100 scale-90 before:absolute before:top-0 before:left-1/2 before:right-1/2 before:bottom-0 before:opacity-0 before:transition-all before:duration-500 hover:before:left-0 hover:before:right-0 hover:before:opacity-100"
-          >
-            <MdOutlineQrCodeScanner className="hover:bg-[#FF0072]" />
-            <span className="flex w-[180px] pl-2">Scan QR Code</span>
+        {/* <input
+          type="text"
+          placeholder="Enter your cash out amount"
+          {...register("cashAmount", { required: true })}
+          // onChange={handleAgentNumberChange}
+          className={`${agentStatus === true ? "my-5 peer w-[230px] border-0 border-b-2 border-red-400 bg-transparent py-2.5 text-white text-[17px] placeholder-transparent focus:border-b-[3px] focus:outline-none focus:ring-0 focus:border-b-gradient-to-r focus:from-[#116399] focus:to-[#38caef] font-normal focus:font-bold transition-all duration-200" : "relative -left-96 hidden"}`}
+        />
+
+        <label
+          htmlFor="agentNumber"
+          className={`${agentStatus === true ? "absolute -left-96" : "absolute left-40 top-0 text-[17px] text-gray-400 transition-all peer-placeholder-shown:top-5 peer-placeholder-shown:text-[17px] peer-placeholder-shown:cursor-text peer-focus:top-0 peer-focus:text-[17px] peer-focus:text-[#38caef] peer-focus:font-bold"}`}
+        >
+          Agent Number
+        </label> */}
+
+        {
+          //   agentNum===true?<button type="submit">
+          //   <FaArrowCircleRight className="text-4xl scale-90 hover:scale-100 duration-[1s] hover:text-[#FF0072]" />
+          // </button>:
+          <button type="submit" onClick={handleSubmit(handelNumAgent)}>
+            <FaArrowCircleRight
+              className={`${agentStatus === true ? "text-4xl scale-90 hover:scale-100 duration-[1s] hover:text-[#FF0072]" : "text-4xl text-gray-900"}`}
+            />
           </button>
-          <History />
-        </div>
+        }
+
+        {/* </form> */}
+      </div>
+
+      {errors.agentNumber && (
+        <p className="text-red-500 text-sm text-center -mt-3">
+          Agent number is required
+        </p>
+      )}
+
+      <div className="grid justify-center items-center">
+        <button
+          type="button"
+          className="max-w-[280px] flex relative left-40 items-center gap-2 text-center font-bold text-[18px] tracking-[2px] uppercase px-8 py-3 border-4 border-[#FF0072] rounded-sm shadow-md shadow-black/10 transition-all duration-300 ease-in-out hover:text-white hover:scale-100 scale-90 before:absolute before:top-0 before:left-1/2 before:right-1/2 before:bottom-0 before:opacity-0 before:transition-all before:duration-500 hover:before:left-0 hover:before:right-0 hover:before:opacity-100"
+        >
+          <MdOutlineQrCodeScanner className="hover:bg-[#FF0072]" />
+          <span className="flex w-[180px] pl-2">Scan QR Code</span>
+        </button>
+        <History />
+      </div>
     </motion.div>
   );
 };
