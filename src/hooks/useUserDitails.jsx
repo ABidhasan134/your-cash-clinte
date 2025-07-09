@@ -13,7 +13,7 @@ const useUserDitails = () => {
         queryKey: ["users"],
         queryFn:async()=>{
             const res=await axiosPublic.get(`/users/${userEmail.email}`);
-            console.log("this respons from the user hook",res)
+            // console.log("this respons from the user hook",res)
             return res.data;
         }
     })

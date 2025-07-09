@@ -7,10 +7,12 @@ import { MdOutlineQrCodeScanner } from "react-icons/md";
 import usePublic from "../../hooks/axiosPublic";
 import useUserDitails from "../../hooks/useUserDitails";
 import History from "../history/history";
+import { toast, ToastContainer } from "react-toastify";
 
 const CashOut = () => {
   const [user] = useUserDitails();
   const axiosPublic = usePublic();
+  console.log(user);
   const {
     register,
     handleSubmit,
@@ -67,11 +69,20 @@ const CashOut = () => {
     setAgentStatus(false);
   };
   const handelCashAmount = () => {
+    if(cashAmout>user.amount){
+      setBtn1(false);
+      setBtn1(true);
+      toast.error("You don't have sufficient balance")
+      return
+    }
     setBtn2(true);
     console.log("cash out amount on submit", cashAmout);
     return;
   };
-  const cashOut = () => {
+  const cashOut = async() => {
+    const info={agentNumber,cashAmout,password,senderPhoneNumber:user.phoneNumber,senderEmail:user.email}
+    const res=await axiosPublic.patch(`/cashOut`,info);
+    console.log(res)
     console.log(
       "all information of cash out",
       agentNumber,
@@ -225,6 +236,7 @@ const CashOut = () => {
           ""
         )}
       </div>
+      <ToastContainer></ToastContainer>
 
       {/* QR code sceaner */}
       <div className="grid justify-center items-center">

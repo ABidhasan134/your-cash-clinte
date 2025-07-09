@@ -3,7 +3,7 @@ import useUserDitails from "../../hooks/useUserDitails";
 
 const History = () => {
   const [user] = useUserDitails();
-  console.log(user.history);
+  // console.log(user.history);
   return <div className="overflow-x-auto">
   <table className="table table-zebra">
     {/* head */}
