@@ -19,10 +19,13 @@ const CashOut = () => {
   } = useForm();
   const [agentStatus, setAgentStatus] = useState(false);
   const [btn1, setBtn1] = useState(false);
-  const [agentNumber, setAgentNumber] = useState();
+  const [agentNumber, setAgentNumber] = useState(0);
   const [cashStatus, setCashStatus] = useState(false);
   const [btn2, setBtn2] = useState(false);
   const [cashAmout, setCashAmout] = useState();
+  const [passwordStatus, setPasswordStatus] = useState(false);
+  // const [btn3, setBtn3] = useState(false);
+  const [password, setPassword] = useState();
   // this will log the value on every change
   const handleAgentNumberChange = (e) => {
     const value = e.target.value;
@@ -38,22 +41,40 @@ const CashOut = () => {
   };
   const handleAmoutChange = (e) => {
     const value = e.target.value;
-
-   
-      setCashStatus(true);
-      setCashAmout(value);
-   
-      console.log("your amount of cash out is", value);
-      // setAgentStatus(false);
-   
+    setCashStatus(true);
+    setCashAmout(value);
+    console.log("your amount of cash out is", value);
+    // setAgentStatus(false);
+  };
+  const handlePassword = (e) => {
+    const value = e.target.value;
+    setPasswordStatus(true);
+    setPassword(value);
+    console.log("your password is", value);
+    // setAgentStatus(false);
   };
   const handelNumAgent = () => {
-    setBtn1(true);
-    console.log("agent number is", agentNumber);
+    const length = agentNumber.length;
+    console.log(length);
+    if (length === 11) {
+      setBtn1(true);
+      console.log("agent number is", agentNumber);
+      return;
+    }
+    setBtn1(false);
+    setAgentStatus(false);
   };
   const handelCashAmount = () => {
     setBtn2(true);
     console.log("cash out amount on submit", cashAmout);
+  };
+  const cashOut = () => {
+    console.log(
+      "all information of cash out",
+      agentNumber,
+      cashAmout,
+      password
+    );
   };
   return (
     <motion.div
@@ -69,77 +90,140 @@ const CashOut = () => {
 
       <div className="relative w-full pt-5 flex justify-center items-center text-center bg-black py-6">
         {/* agent number */}
-        <>
-        <input
-          type="text"
-          placeholder="Enter your agent number"
-          {...register("agentNumber", { required: true })}
-          onChange={handleAgentNumberChange}
-          className={`${btn1 === true ? "hidden" : "my-5 peer w-[230px] border-0 border-b-2 border-gray-400 bg-transparent py-2.5 text-white text-[17px] placeholder-transparent focus:border-b-[3px] focus:outline-none focus:ring-0 focus:border-b-gradient-to-r focus:from-[#992311] focus:to-[#4476d2] font-normal focus:font-bold transition-all duration-200"}`}
-        />
+        <div className="grid">
+          <div className="flex">
+            <input
+              type="text"
+              placeholder="Enter your agent number"
+              {...register("agentNumber", {
+                required: "Agent number is required",
+                pattern: {
+                  value: /^(01[3-9]\d{8})$/,
+                  message: "It must be a Bangladeshi number",
+                },
+              })}
+              onChange={handleAgentNumberChange}
+              className={`${btn1 === true ? "hidden" : "my-5 peer w-[230px] border-0 border-b-2 border-gray-400 bg-transparent py-2.5 text-white text-[17px] placeholder-transparent focus:border-b-[3px] focus:outline-none focus:ring-0 focus:border-b-gradient-to-r focus:from-[#992311] focus:to-[#4476d2] font-normal focus:font-bold transition-all duration-200"}`}
+            />
 
-        <label
-          htmlFor="agentNumber"
-          className={`${btn1 === true ? "absolute -left-96 hidden" : "absolute left-40 top-0 text-[17px] text-gray-400 transition-all peer-placeholder-shown:top-5 peer-placeholder-shown:text-[17px] peer-placeholder-shown:cursor-text peer-focus:top-0 peer-focus:text-[17px] peer-focus:text-[#4476d2] peer-focus:font-bold"}`}
-        >
-          Agent Number
-        </label>
-        {errors.agentNumber && (
-        <p className="text-red-500 text-sm text-center -top-10 z-10">
-          Agent number is required
-        </p>
-      )}
+            <label
+              htmlFor="agentNumber"
+              className={`${btn1 === true ? "absolute -left-96 hidden" : "absolute left-40 top-0 text-[17px] text-gray-400 transition-all peer-placeholder-shown:top-5 peer-placeholder-shown:text-[17px] peer-placeholder-shown:cursor-text peer-focus:top-0 peer-focus:text-[17px] peer-focus:text-[#4476d2] peer-focus:font-bold"}`}
+            >
+              Agent Number
+            </label>
+
+            {btn1 === true ? (
+              ""
+            ) : (
+              <button
+                className={`${agentStatus === true ? "" : " disabled"}`}
+                type="submit"
+                onClick={handleSubmit(handelNumAgent)}
+              >
+                <FaArrowCircleRight
+                  className={`${agentStatus === true ? `text-4xl scale-90 hover:scale-100 duration-[1s] hover:text-[#4476d2] ` : "text-4xl text-gray-900 disabled"}?`}
+                />
+              </button>
+            )}
+          </div>
+          {errors.agentNumber && (
+            <p className="text-red-500 text-sm text-center -top-10 z-10">
+              {errors.agentNumber.message}
+            </p>
+          )}
+        </div>
+        {/* cash out amount */}
 
         {btn1 === true ? (
-          ""
-        ) : (
-          <button type="submit" onClick={handleSubmit(handelNumAgent)}>
-            <FaArrowCircleRight
-              className={`${agentStatus === true ? `text-4xl scale-90 hover:scale-100 duration-[1s] hover:text-[#4476d2] ` : "text-4xl text-gray-900"}?`}
-            />
-          </button>
-        )}
-        </>
-        {/* cash out amount */}
-      
-      {
-        btn1===true?
-        <>
-        <input
-          type="text"
-          placeholder="Enter your agent number"
-          {...register("cashAmount", { required: true,max: 30000,min: 10 })}
-          onChange={handleAmoutChange}
-          className={`${btn2 === true ? "relative -left-96 hidden" : "my-5 peer w-[230px] border-0 border-b-2 border-gray-400 bg-transparent py-2.5 text-white text-[17px] placeholder-transparent focus:border-b-[3px] focus:outline-none focus:ring-0 focus:border-b-gradient-to-r focus:from-[#116399] focus:to-[#38caef] font-normal focus:font-bold transition-all duration-200"}`}
-        />
+          <div className="grid">
+            <div className="flex">
+              <input
+                type="text"
+                placeholder="Enter your agent number"
+                {...register("cashAmount", {
+                  required: "Amount is required",
+                  min: {
+                    value: 10,
+                    message: "Amount must be at least 10 Tk",
+                  },
+                  max: {
+                    value: 3000,
+                    message: "Amount cannot exceed 3000 Tk",
+                  },
+                })}
+                onChange={handleAmoutChange}
+                className={`${btn2 === true ? "relative -left-96 hidden" : "my-5 peer w-[230px] border-0 border-b-2 border-gray-400 bg-transparent py-2.5 text-white text-[17px] placeholder-transparent focus:border-b-[3px] focus:outline-none focus:ring-0 focus:border-b-gradient-to-r focus:from-[#116399] focus:to-[#38caef] font-normal focus:font-bold transition-all duration-200"}`}
+              />
 
-        <label
-          htmlFor="cashAmount"
-          className={`${btn2 === true ? "absolute -left-96 hidden" : "absolute left-40 top-0 text-[17px] text-gray-400 transition-all peer-placeholder-shown:top-5 peer-placeholder-shown:text-[17px] peer-placeholder-shown:cursor-text peer-focus:top-0 peer-focus:text-[17px] peer-focus:text-[#38caef] peer-focus:font-bold"}`}
-        >
-          Enter your cash out amount 
-        </label>
-          
-          {
-            btn2===true?"":
-            <button type="submit" onClick={handleSubmit(handelCashAmount)}>
-            <FaArrowCircleRight
-              className={`${cashStatus === true ? `text-4xl scale-90 hover:scale-100 duration-[1s] hover:text-[#FF0072] ` : "text-4xl text-gray-900"}?`}
+              <label
+                htmlFor="cashAmount"
+                className={`${btn2 === true ? "absolute -left-96 hidden" : "absolute left-40 top-0 text-[17px] text-gray-400 transition-all peer-placeholder-shown:top-5 peer-placeholder-shown:text-[17px] peer-placeholder-shown:cursor-text peer-focus:top-0 peer-focus:text-[17px] peer-focus:text-[#38caef] peer-focus:font-bold"}`}
+              >
+                Enter your cash out amount
+              </label>
+
+              {btn2 === true ? (
+                ""
+              ) : (
+                <button type="submit" onClick={handleSubmit(handelCashAmount)}>
+                  <FaArrowCircleRight
+                    className={`${cashStatus === true ? `text-4xl scale-90 hover:scale-100 duration-[1s] hover:text-[#FF0072] ` : "text-4xl text-gray-900"}?`}
+                  />
+                </button>
+              )}
+            </div>
+            {errors.cashAmount && (
+              <p className="text-red-500 text-sm text-center -top-10 z-10">
+                {errors.cashAmount.message}
+              </p>
+            )}
+          </div>
+        ) : (
+          ""
+        )}
+        {/* password filde */}
+        {btn2 === true && btn1 === true ? (
+          <div className="grid">
+            <div className="flex">
+            <input
+              type="password"
+              placeholder="Enter your password"
+              {...register("password", {
+  required: "Password is required",
+  validate: (value) =>
+    value.length === 5 || "Your password must be exactly 5 characters.",
+})}
+
+              onChange={handleAmoutChange}
+              className={`"my-5 peer w-[230px] border-0 border-b-2 border-gray-400 bg-transparent py-2.5 text-white text-[17px] placeholder-transparent focus:border-b-[3px] focus:outline-none focus:ring-0 focus:border-b-gradient-to-r focus:from-[#f1e12e] focus:to-[#f1e12e] font-normal focus:font-bold transition-all duration-200"}`}
             />
-          </button>
-          }
-        </>:""
-      } 
-      {errors.cashAmount && (
-        <p className="text-red-500 text-sm text-center -top-10 z-10">
-          {errors.cashAmount.message}
-        </p>
-      )}
-      
+
+            <label
+              htmlFor="password"
+              className="absolute left-40 top-16 text-[17px] text-gray-400 transition-all peer-placeholder-shown:top-5 peer-placeholder-shown:text-[17px] peer-placeholder-shown:cursor-text peer-focus:top-3 peer-focus:text-[17px] peer-focus:text-[#f1e12e] peer-focus:font-bold"
+            >
+              Enter your password
+            </label>
+            
+            <button type="submit" onClick={handleSubmit(cashOut)}>
+              <FaArrowCircleRight
+                className={`text-4xl scale-90 hover:scale-100 duration-[1s] hover:text-[#f1e12e]`}
+              />
+            </button>
+            
+            </div>
+            {errors.password && (
+              <p className="text-red-500 text-sm text-center -top-10 z-10">
+                {errors.password.message}
+              </p>
+            )}
+          </div >
+        ) : (
+          ""
+        )}
       </div>
 
-      
-      
       {/* QR code sceaner */}
       <div className="grid justify-center items-center">
         <button
