@@ -34,6 +34,7 @@ const CashOut = () => {
       console.log("valid number", value);
       setAgentStatus(true);
       setAgentNumber(value);
+      return;
     } else {
       console.log("agent number is not valid", value);
       setAgentStatus(false);
@@ -45,6 +46,7 @@ const CashOut = () => {
     setCashAmout(value);
     console.log("your amount of cash out is", value);
     // setAgentStatus(false);
+    return;
   };
   const handlePassword = (e) => {
     const value = e.target.value;
@@ -67,6 +69,7 @@ const CashOut = () => {
   const handelCashAmount = () => {
     setBtn2(true);
     console.log("cash out amount on submit", cashAmout);
+    return;
   };
   const cashOut = () => {
     console.log(
@@ -186,39 +189,38 @@ const CashOut = () => {
         {btn2 === true && btn1 === true ? (
           <div className="grid">
             <div className="flex">
-            <input
-              type="password"
-              placeholder="Enter your password"
-              {...register("password", {
-  required: "Password is required",
-  validate: (value) =>
-    value.length === 5 || "Your password must be exactly 5 characters.",
-})}
-
-              onChange={handleAmoutChange}
-              className={`"my-5 peer w-[230px] border-0 border-b-2 border-gray-400 bg-transparent py-2.5 text-white text-[17px] placeholder-transparent focus:border-b-[3px] focus:outline-none focus:ring-0 focus:border-b-gradient-to-r focus:from-[#f1e12e] focus:to-[#f1e12e] font-normal focus:font-bold transition-all duration-200"}`}
-            />
-
-            <label
-              htmlFor="password"
-              className="absolute left-40 top-16 text-[17px] text-gray-400 transition-all peer-placeholder-shown:top-5 peer-placeholder-shown:text-[17px] peer-placeholder-shown:cursor-text peer-focus:top-3 peer-focus:text-[17px] peer-focus:text-[#f1e12e] peer-focus:font-bold"
-            >
-              Enter your password
-            </label>
-            
-            <button type="submit" onClick={handleSubmit(cashOut)}>
-              <FaArrowCircleRight
-                className={`text-4xl scale-90 hover:scale-100 duration-[1s] hover:text-[#f1e12e]`}
+              <input
+                type="password"
+                placeholder="Enter your password"
+                {...register("password", {
+                  required: "Password is required",
+                  validate: (value) =>
+                    value.length === 5 ||
+                    "Your password must be exactly 5 characters.",
+                })}
+                onChange={handlePassword}
+                className={`"my-5 peer w-[230px] border-0 border-b-2 border-gray-400 bg-transparent py-2.5 text-white text-[17px] placeholder-transparent focus:border-b-[3px] focus:outline-none focus:ring-0 focus:border-b-gradient-to-r focus:from-[#f1e12e] focus:to-[#f1e12e] font-normal focus:font-bold transition-all duration-200"}`}
               />
-            </button>
-            
+
+              <label
+                htmlFor="password"
+                className="absolute left-40 top-16 text-[17px] text-gray-400 transition-all peer-placeholder-shown:top-5 peer-placeholder-shown:text-[17px] peer-placeholder-shown:cursor-text peer-focus:top-3 peer-focus:text-[17px] peer-focus:text-[#f1e12e] peer-focus:font-bold"
+              >
+                Enter your password
+              </label>
+
+              <button type="submit" onClick={handleSubmit(cashOut)}>
+                <FaArrowCircleRight
+                  className={`text-4xl scale-90 hover:scale-100 duration-[1s] hover:text-[#f1e12e]`}
+                />
+              </button>
             </div>
             {errors.password && (
               <p className="text-red-500 text-sm text-center -top-10 z-10">
                 {errors.password.message}
               </p>
             )}
-          </div >
+          </div>
         ) : (
           ""
         )}
