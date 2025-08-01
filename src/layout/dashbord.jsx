@@ -7,7 +7,7 @@ import SendMoney from "../Dashbord/user/sendMoney";
 import LogOut from "../log/logOut";
 import useUserDitails from "../hooks/useUserDitails";
 import user1 from "../../public/img/user1.png";
-import cashIn from '../../public/img/money.png'
+import cashIn from '../../public/img/application.png'
 import withdraw from '../../public/img/withdraw.png'
 import parchment from '../../public/img/parchment.png'
 import { AnimatePresence } from "framer-motion";
@@ -29,7 +29,7 @@ const Dashboard = () => {
         <ul className="grid grid-flow-row grid-cols-2 font-bold text-2xl">
           <li className="grid  justify-center">
             <NavLink to="/dashboard/cashIn"><img src={cashIn} alt="cash In"className="navLinks" /></NavLink>
-            <span className="text-xl text-center">Cash In</span>
+            <span className="text-xl text-center">Mobile <br/> Recharge</span>
           </li>
           {/* <NavLink to="/dashboard/sendMoney"></NavLink> */}
           <li className="grid  justify-center">
